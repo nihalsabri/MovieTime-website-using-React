@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 import { useState } from "react";
+import { userRegister } from "../../services/auth";
+import toast, { Toaster } from "react-hot-toast";
 
-export function Register() {
+export function Signup() {
     const [value, setValue] = useState({
         name: "",
         email: "",
@@ -15,6 +18,7 @@ export function Register() {
         pError: "",
         cError: ""
     });
+    const navigate = useNavigate();
 
     const ValidateInput = (ev) => {
         const { name, value: inputValue } = ev.target;
@@ -24,7 +28,7 @@ export function Register() {
         }));
     }
 
-    const ValidateForm = (ev) => {
+    const ValidateForm = async(ev) => {
         ev.preventDefault();
         
         const newError = {
@@ -45,12 +49,18 @@ export function Register() {
 
         if (Object.values(newError).every(error => error === "valid")) {
             console.log("Registration Data:", value);
+            await userRegister(value.email, value.password);
+            toast.success("Registration successful!");
+            navigate("/Movies");
+        } else {
+             console.log("Invalid validation");
+             toast.error("Invalid validation");
         }
     }
 
     return (    <>
-    <div style={{width: "100vw", height:'100vh'}}>
-        <h2 className="fw-bold mb-2">Register</h2>
+    <div className="signup-page">
+        <h2 className="fw-bold mb-2">Sign up</h2>
 
         <form onSubmit={ValidateForm} className="form-container">
             <input 
@@ -106,7 +116,9 @@ export function Register() {
                 {error.cError === "valid" ? " Passwords match" : error.cError}
             </div>
 
-            <button type="submit" className="btn btn-primary mt-3">Register</button>
+            <button type="submit" className="btn btn-primary mt-3">Sign up</button>
+                                <Toaster position="top-center" />
+            
         </form>
         </div>
         </>

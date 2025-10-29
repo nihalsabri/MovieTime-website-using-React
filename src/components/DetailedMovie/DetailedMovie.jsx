@@ -38,11 +38,16 @@ console.log(err);
 
     return (
         <>
-        <h1>Movie Details</h1>
 
- <div className="movies-container"> 
- <div className="movie-card" >
-  <div className="card-image">
+ <div className="movies-container-detailed"> 
+  {/* translucent blurred background */}
+  <div
+    className="bg-layer"
+    style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path || movie.poster_path})` }}
+  />
+
+  <div className="movie-card-detailed" >
+  <div className="card-image-detailed">
     <img 
       src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} 
       alt={movie.title}
@@ -51,7 +56,7 @@ console.log(err);
   </div>
   
   <div className="card-content">
-    <h3 className="movie-title">{movie.title}</h3>
+    <h1 >{movie.title}</h1>
     <p className="movie-date">{new Date(movie.release_date).getFullYear()}</p>
     <p className="movie-overview">{movie.overview}</p>
     

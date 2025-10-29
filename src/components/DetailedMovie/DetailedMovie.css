@@ -1,0 +1,51 @@
+.movies-container-detailed {
+    position: relative;
+    width: 100%;
+    min-height: 100vh; /* ensure bg covers entire viewport height */
+    padding: 3rem 1rem;
+    box-sizing: border-box;
+    overflow: hidden; /* ensure bg-layer can't overflow and break responsiveness */
+}
+
+/* background layer that sits behind the card */
+.movies-container-detailed .bg-layer{
+    position: absolute;
+    inset: 0; /* cover the whole container (top:0; right:0; bottom:0; left:0) */
+    background-repeat: no-repeat;
+    background-size: cover; /* cover keeps aspect and avoids white gaps */
+    background-position: center center; /* center the image */
+    filter: blur(6px) saturate(0.9);
+    opacity: 0.45;
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+.movie-card-detailed {
+    position: relative;
+    z-index: 2;
+    background: rgb(236, 236, 236);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+.movie-image-detailed{
+    width: 300px;
+    height: auto;
+    border-radius: 12px;
+    margin-right: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+}
+
+@media (max-width: 720px){
+    .movie-card-detailed{ flex-direction: column; width: 100%; padding: 16px }
+    .movie-image-detailed{ width: 80%; margin: 0 auto 12px }
+}

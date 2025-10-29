@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { themeContext } from "../Theme/Theme";
-import {useContext }from "react"
 
 function Navbarr() {
-// use fav as a shared data
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+  useEffect(() => {
+    const userToken = localStorage.getItem('userToken');
+    setIsLoggedIn(!!userToken);
+  }, []);
 
-  // const favorites = useSelector(state => state.Favourite.movies);
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    setIsLoggedIn(false);
+    navigate('/login');
+  };
+
+  // use fav as a shared data
   const favoritesCount = useSelector((state) => state.Favorite.value);
 const {theme,setTheme} = useContext(themeContext)
 
@@ -22,9 +33,9 @@ const ToggleTheme =() => {
         <Container>
           <Navbar.Brand href="#home">BrandLogo</Navbar.Brand>
           <Nav className="me-auto">
-            <NavLink className={({ isActive }) => 
+            {/* <NavLink className={({ isActive }) => 
     isActive ? "nav-link active" : "nav-link"
-  } to="/"   >Home</NavLink>
+  } to="/"   >Home</NavLink> */}
 
             <NavLink className={({ isActive }) => 
     isActive ? "nav-link active" : "nav-link"
@@ -32,18 +43,35 @@ const ToggleTheme =() => {
             <NavLink className={({ isActive }) => 
     isActive ? "nav-link active" : "nav-link"
   }  to="/categories">Categories</NavLink>
-             <NavLink className={({ isActive }) => 
-    isActive ? "nav-link active" : "nav-link"
-  } to="/pricing">Pricing</NavLink>
-            <NavLink className={({ isActive }) => 
-    isActive ? "nav-link active" : "nav-link"
-  } to="/about">About us</NavLink>
- <NavLink to="/favorites" className="favorite-link">
-            <span className="heart-icon">❤️</span>
-            {favoritesCount > 0 && (
-              <span className="favorite-count">{favoritesCount}</span>
+   {/* ternary operator to conditionally render links based on isLoggedIn state */}
+            {isLoggedIn ? (
+              <>
+        
+                <NavLink 
+                  to="/favorites" 
+                  className={({ isActive }) => 
+                    `${isActive ? "nav-link active" : "nav-link"} favorite-link`
+                  }
+                >
+                  <span className="heart-icon">❤️</span>
+                  {favoritesCount > 0 && (
+                    <span className="favorite-count">{favoritesCount}</span>
+                  )}
+                </NavLink>
+
+                <Nav.Link onClick={handleLogout} className="nav-link">Logout</Nav.Link>
+              </>
+            ) : (
+              <>
+   
+                <NavLink className={({ isActive }) => 
+                  isActive ? "nav-link active" : "nav-link"
+                } to="/login">Login</NavLink>
+                <NavLink className={({ isActive }) => 
+                  isActive ? "nav-link active" : "nav-link"
+                } to="/signup">Sign Up</NavLink>
+              </>
             )}
-          </NavLink>
   
   <button style={{
               marginLeft: '10px',

@@ -1,18 +1,60 @@
-import { useState,useEffect } from "react";
-// import axios from "axios";
-// import instance from "../../instance";
-import '../Movies/Movies.css'
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addFav, removeFav } from '../../FavSlice';
+import '../Movies/Movies.css';
 
-import { getMovies } from '../../MovieSlice';
-import { useNavigate } from "react-router-dom";
+/* 
+===============================================
+OLD CODE BEFORE CATEGORIES - FOR REFERENCE ONLY
+===============================================
 
+export function Movies() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  // Local state
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  
+  // Redux state
+  const { movies, currentPage, loading } = useSelector(state => state.movies);
+  const favorites = useSelector(state => state.Favorite.movies ?? []);
 
-// import { useLoaderData, useNavigate } from "react-router-dom";
-// const api_key="5f8557497311bd7eeea85b64c12d8fd4";
-// const api_url=` https://api.themoviedb.org/3/movie/popular?api_key=${api_key}`;
- import { useDispatch, useSelector } from 'react-redux';
+  // Handle page navigation
+  const handlePageChange = (newPage) => {
+    dispatch(getMovies(newPage.toString()));
+    navigate(`?page=${newPage}`);
+  };
 
- import { addFav, removeFav } from '../../FavSlice';
+  // Load movies on mount and page change
+  useEffect(() => {
+    dispatch(getMovies(currentPage.toString()));
+  }, [dispatch, currentPage]);
+
+  // Handle search filtering
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = movies.filter(movie =>
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredMovies(filtered);
+    } else {
+      setFilteredMovies(movies);
+    }
+  }, [searchTerm, movies]);
+
+  // Handle favorites
+  const toggleFavorite = (movie) => {
+    const isFavorite = favorites.find(fav => fav.id === movie.id);
+    if (isFavorite) {
+      dispatch(removeFav(movie.id));
+    } else {
+      dispatch(addFav(movie));
+    }
+  };
+}
+*/
 
 
 // // instance with loader 
@@ -36,18 +78,37 @@ import { useNavigate } from "react-router-dom";
 
 
 export function Movies (){
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
-// const [movies,setmovies] = useState([])
-// fetch api data using axios
-//   useEffect(() => {
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const searchParams = new URLSearchParams(location.search);
+        const categoryId = searchParams.get('with_genres');
+        const page = searchParams.get('page') || '1';
+        
+        let url = `https://api.themoviedb.org/3/discover/movie?api_key=5f8557497311bd7eeea85b64c12d8fd4&page=${page}`;
+        
+        if (categoryId) {
+          url += `&with_genres=${categoryId}`;
+        }
 
-//     axios.get(`${api_url}`)
-//     .then(
-//         (res) => {
-// console.log(res.data);
-// setmovies(res.data.results)
-//         }
-//     )        
+  const response = await fetch(url);
+  const data = await response.json();
+  setMovies(data.results);
+  setFilteredMovies(data.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
+  }, [location.search]);
 //        .catch((err)=>{
 // console.log(err);
 
@@ -74,25 +135,17 @@ export function Movies (){
 //         ,[])
 
 // const { movies, currentPage } = useLoaderData();
-const [filteredMovies, setMovies] = useState([]);
+
  const [searchTerm, setSearchTerm] = useState('');
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+  const favorites = useSelector(state => state.Favorite.movies ?? []);
 
-  const { movies, currentPage } = useSelector(state => state.movies);
-
-  // const handlePageChange = (newPage) => {
-  //   navigate(`?page=${newPage}`);
-  // }
+  // When user clicks prev/next we just update the query param; the fetch useEffect
+  // (above) listens to location.search and will re-fetch movies accordingly.
   const handlePageChange = (newPage) => {
-    dispatch(getMovies(newPage.toString()));
     navigate(`?page=${newPage}`);
   };
-
-
-    useEffect(() => {
-    dispatch(getMovies(currentPage.toString()));
-  }, [dispatch, currentPage]);
 
 // useEffect(() => {
 //   if (searchTerm) {
@@ -118,7 +171,6 @@ const [filteredMovies, setMovies] = useState([]);
     }
   }, [searchTerm, movies]);
 
-const favorites = useSelector(state => state.Favorite.movies ?? []);
   
   //4 logic to handle usage of actions and shared data changes
     // const toggleFavorite = (movie) => { 
@@ -160,13 +212,21 @@ const favorites = useSelector(state => state.Favorite.movies ?? []);
 /> 
  <div className="movies-container"> 
 {filteredMovies.map(movie => (
-        <div className="movie-card" key={movie.id}>
+        <div
+          className="movie-card"
+          key={movie.id}
+          role="button"
+          tabIndex={0}
+          onClick={() => navigate(`/movie/${movie.id}`)}
+          onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/movie/${movie.id}`); }}
+          style={{ cursor: 'pointer' }}
+        >
   <div className="card-image">
     <img 
       src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} 
       alt={movie.title}
     />
- <button onClick={() => toggleFavorite(movie)}>  
+ <button onClick={(e) => { e.stopPropagation(); toggleFavorite(movie); }}>  
   {/* if array inculdes any matcheh movie with this id  do "FILL heart" */}
     {favorites.some(fav => fav.id === movie.id) ? '❤️' : '🤍'} 
    </button>

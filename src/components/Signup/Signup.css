@@ -1,0 +1,38 @@
+.signup-page {
+	width: 100%;
+	min-height: 100vh; 
+	box-sizing: border-box;
+	display: flex;
+        flex-direction: column;
+    justify-content: center;
+align-items: center; 
+	padding: 2rem 1rem; 
+}
+
+.signup-page h2 {
+	width: 100%;
+	max-width: 420px;
+	margin: 0 0 0.75rem 0;
+}
+
+.form-container {
+	width: 100%;
+	max-width: 420px; 
+	margin-top: 0.5rem;
+}
+
+.form-container .form-control {
+	width: 100%;
+	margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+	.signup-page {
+		padding-top: 2.5rem;
+	}
+}
+
+.signup-page {
+	margin-left: auto;
+	margin-right: auto;
+}
