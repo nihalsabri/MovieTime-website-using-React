@@ -52,7 +52,7 @@ function App() {
 
     </Routes>
     </BrowserRouter> */}
-   <div className={theme == "light" ? "bg-light" : "bg-dark"}>
+  <div className={`theme-${theme} ${theme == "light" ? "bg-light" : "bg-dark"}`}>
 
 <ThemeProvider value={{ theme, setTheme }}>
 <Provider store= {Store}>  

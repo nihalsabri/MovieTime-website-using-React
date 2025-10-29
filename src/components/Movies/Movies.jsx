@@ -195,85 +195,79 @@ export function Movies (){
 
 
     return (
-        <>
+      <div className="movies-page-container">
         <h1>Have a nice time</h1>
-<input 
-  type="text" 
-  placeholder="Search movies..."
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-  style={{
-    padding: '10px',
-    width: '300px',
-    marginBottom: '20px',
-    borderRadius: '5px',
-    border: '1px solid #ccc'
-  }}
-/> 
- <div className="movies-container"> 
-{filteredMovies.map(movie => (
-        <div
-          className="movie-card"
-          key={movie.id}
-          role="button"
-          tabIndex={0}
-          onClick={() => navigate(`/movie/${movie.id}`)}
-          onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/movie/${movie.id}`); }}
-          style={{ cursor: 'pointer' }}
-        >
-  <div className="card-image">
-    <img 
-      src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} 
-      alt={movie.title}
-    />
- <button onClick={(e) => { e.stopPropagation(); toggleFavorite(movie); }}>  
-  {/* if array inculdes any matcheh movie with this id  do "FILL heart" */}
-    {favorites.some(fav => fav.id === movie.id) ? '❤️' : '🤍'} 
-   </button>
-    <div className="rating">{movie.vote_average.toFixed(1)}</div>
-  </div>
-  
-  <div className="card-content">
-    <h3 className="movie-title">{movie.title}</h3>
-    <p className="movie-date">{new Date(movie.release_date).getFullYear()}</p>
-    <p className="movie-overview">{movie.overview}</p>
-    
-    <div className="movie-details">
-      <span className={`age-rating ${movie.adult ? 'adult' : 'all'}`}>
-        {movie.adult ? '18+' : 'ALL'}
-      </span>
-      <span className="language">{movie.original_language.toUpperCase()}</span>
-    </div>
-    
-    <div className="genres">
-      {movie.genre_ids.map(genre => (
-        <span key={genre} className="genre-tag">#{genre}</span>
-      ))}
-    </div>
-  </div>
-</div>
-      ))}   
+        <div className="search-container">
+          <input 
+            className="search-input"
+            type="text" 
+            placeholder="Search movies..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="movies-container">
+          {filteredMovies.map(movie => (
+            <div
+              className="movie-card"
+              key={movie.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => navigate(`/movie/${movie.id}`)}
+              onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/movie/${movie.id}`); }}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="card-image">
+                <img 
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} 
+                  alt={movie.title}
+                />
+                <button onClick={(e) => { e.stopPropagation(); toggleFavorite(movie); }}>  
+                  {favorites.some(fav => fav.id === movie.id) ? '❤️' : '🤍'} 
+                </button>
+                <div className="rating">{movie.vote_average.toFixed(1)}</div>
+              </div>
+              
+              <div className="card-content">
+                <h3 className="movie-title">{movie.title}</h3>
+                <p className="movie-date">{new Date(movie.release_date).getFullYear()}</p>
+                <p className="movie-overview">{movie.overview}</p>
+                
+                <div className="movie-details">
+                  <span className={`age-rating ${movie.adult ? 'adult' : 'all'}`}>
+                    {movie.adult ? '18+' : 'ALL'}
+                  </span>
+                  <span className="language">{movie.original_language.toUpperCase()}</span>
+                </div>
+                
+                <div className="genres">
+                  {movie.genre_ids.map(genre => (
+                    <span key={genre} className="genre-tag">#{genre}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}   
+        </div>
+
+        <div className="d-flex justify-content-center align-items-center gap-3 my-4">
+          <button 
+            className="btn btn-outline-primary"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          
+          <span className="fw-bold fs-4">{currentPage}</span>
+          
+          <button 
+            className="btn btn-outline-primary"
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
-
-<div className="d-flex justify-content-center align-items-center gap-3 my-4">
-  <button 
-    className="btn btn-outline-primary"
-    onClick={() => handlePageChange(currentPage - 1)}
-    disabled={currentPage === 1}
-  >
-    Previous
-  </button>
-  
-  <span className="fw-bold fs-4">{currentPage}</span>
-  
-  <button 
-    className="btn btn-outline-primary"
-    onClick={() => handlePageChange(currentPage + 1)}
-  >
-    Next
-  </button>
-</div>
-
-     </>
     )
 }

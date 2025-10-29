@@ -36,3 +36,16 @@ align-items: center;
 	margin-left: auto;
 	margin-right: auto;
 }
+
+/* Dark theme overrides */
+.theme-dark .form-container {
+	background: #0b1220;
+	padding: 1rem;
+	border-radius: 8px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+.theme-dark .signup-page h2 { color: #e6eef8 }
+.theme-dark .form-control { background: rgba(255,255,255,0.02); color: #e6eef8; border: 1px solid rgba(255,255,255,0.06) }
+.theme-dark .form-control::placeholder { color: rgba(230,238,248,0.5) }
+.theme-dark .btn-primary { background: #2563eb; border: none }
+.theme-dark .btn-primary:hover { background: #1e40af }

@@ -14,27 +14,43 @@
     background-repeat: no-repeat;
     background-size: cover; /* cover keeps aspect and avoids white gaps */
     background-position: center center; /* center the image */
-    filter: blur(6px) saturate(0.9);
-    opacity: 0.45;
+    filter: blur(2px) saturate(0.85);
+    opacity: 0.4;
     z-index: 0;
     pointer-events: none;
+}
+
+/* Add a gradient overlay for better text contrast */
+.movies-container-detailed .bg-layer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgb(67, 67, 67), rgba(102, 102, 102, 0));
+    z-index: 1;
 }
 
 
 .movie-card-detailed {
     position: relative;
     z-index: 2;
-    background: rgb(236, 236, 236);
+    background: rgba(236, 236, 236, 0.95);
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: row;
     width: 80%;
     margin: 0 auto;
     padding: 20px;
     align-items: flex-start;
+    backdrop-filter: blur(10px);
+}
+
+.theme-dark .movie-card-detailed {
+    background: rgba(28, 28, 28, 0.95);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    color: #fff;
 }
 
 .movie-image-detailed{
@@ -48,4 +64,39 @@
 @media (max-width: 720px){
     .movie-card-detailed{ flex-direction: column; width: 100%; padding: 16px }
     .movie-image-detailed{ width: 80%; margin: 0 auto 12px }
+}
+
+/* Headings */
+.theme-dark .movies-container-detailed h1,
+.theme-dark .movie-card-detailed h3 {
+    color: #e6eef8;
+}
+
+/* heart/button inside detailed (if any) and rating */
+.theme-dark .movie-card-detailed .rating{ background: rgba(255,255,255,0.08); color: #fff }
+
+/* ensure card content text switches color */
+.theme-dark .movie-card-detailed .card-content,
+.theme-dark .movie-card-detailed .movie-title,
+.theme-dark .movie-card-detailed .movie-overview{ color: #e6eef8 }
+
+/* Theme overrides */
+.theme-dark .movie-card-detailed{
+    background: #111827; /* dark gray */
+    color: #e5e7eb; /* light text */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+.theme-dark .movie-card-detailed .card-content,
+.theme-dark .movie-card-detailed .movie-title,
+.theme-dark .movie-card-detailed .movie-overview,
+.theme-dark .movie-card-detailed .movie-date,
+.theme-dark .movie-card-detailed .movie-details,
+.theme-dark .movie-card-detailed .genres {
+    color: #e5e7eb;
+}
+.theme-dark .movie-card-detailed .rating{ background: rgba(255,255,255,0.12); color: #fff }
+
+.theme-light .movie-card-detailed{
+    background: rgb(236,236,236);
+    color: #111827;
 }

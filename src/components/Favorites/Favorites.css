@@ -1,9 +1,12 @@
-
+.container-fav {
+  height: 100vh;
+  
+}
 .favorites-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 
 .favorites-container h2 {

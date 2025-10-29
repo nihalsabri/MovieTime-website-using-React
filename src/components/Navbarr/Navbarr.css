@@ -1,0 +1,80 @@
+.favorite-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: box-shadow 0.15s ease, background 0.15s ease, transform 0.12s ease;
+}
+
+.favorite-link:hover {
+  transform: translateY(-2px);
+}
+
+.heart-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.favorite-count {
+  background: #ff4757;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+/* Theme-aware styles */
+.theme-dark .favorite-link {
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+}
+
+.theme-light .favorite-link {
+  background: rgba(0,0,0,0.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Nav links (Login / Signup) */
+.nav-link {
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+  color: #e6eef8 !important; /* Always light text since navbar is always dark */
+}
+
+/* Hover effect for better interaction feedback */
+.nav-link:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-link.active {
+  background: rgba(255,255,255,0.15);
+  font-weight: 500;
+}
+
+.theme-dark .nav-link:hover {
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+
+/* Ensure navbar brand and active links follow theme */
+.theme-dark .navbar-brand,
+.theme-dark .nav-link,
+.theme-dark .navbar-text {
+  color: #e6eef8 !important;
+}
+
+.theme-dark .nav-link.active {
+  background: rgba(255,255,255,0.06) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+/* Slightly lighter card-like background for nav to differentiate from page */
+.theme-dark .navbar{
+  background-color: rgba(11,18,32,0.9) !important;
+}
+

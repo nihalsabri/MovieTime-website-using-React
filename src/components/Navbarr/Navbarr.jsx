@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import './Navbarr.css';
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -31,7 +32,7 @@ const ToggleTheme =() => {
     return <>
    <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">BrandLogo</Navbar.Brand>
+          <Navbar.Brand href="#home">Movie Time</Navbar.Brand>
           <Nav className="me-auto">
             {/* <NavLink className={({ isActive }) => 
     isActive ? "nav-link active" : "nav-link"

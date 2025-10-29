@@ -73,4 +73,23 @@
     margin-top: 20px;
 }
 
+/* Dark theme styles */
+.theme-dark .form-container {
+    background-color: #0b1220;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+}
+.theme-dark .form-label { color: #e6eef8 }
+.theme-dark .form-control {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: #e6eef8;
+}
+.theme-dark .form-control::placeholder { color: rgba(230,238,248,0.5) }
+.theme-dark .form-control:focus { box-shadow: 0 0 0 3px rgba(226,232,240,0.03); border-color: rgba(255,255,255,0.12) }
+.theme-dark .text-danger { color: #ffb3b3 }
+.theme-dark .btn-primary { background-color: #2563eb; color: #fff }
+.theme-dark .btn-primary:hover { background-color: #1e40af }
+
+.theme-dark .loginPage { background: transparent }
+
 

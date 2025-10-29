@@ -28,7 +28,7 @@ const favorites = useSelector(state => state.Favorite.movies ?? []);
   }
 
   return (
-    <div className="container">
+    <div className="container-fav">
       <h2>My Favorites ({favoritesCount})</h2>
       
       <div className="favorites-grid">
